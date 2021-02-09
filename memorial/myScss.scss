@@ -1,0 +1,55 @@
+// variables :
+
+$red-color: #b32137;
+$pink-color: #81256c;
+$black-color: #282727;
+$gold-color: #ffd21c;
+
+//media query:
+//some code here...
+
+//layout :
+.event-box {
+  padding-top: 80px;
+  font-family: inherit;
+  &__main {
+    display: grid;
+    grid-gap: 50px;
+
+    grid-template-columns:
+      [first-gutter-start] 1fr minmax(50px, auto)
+      [first-gutter-end start-full-grid] repeat(
+        4,
+        [start-column] minmax(200px, max-content) [end-column]
+      )
+      [end-full-grid second-gutter-start] minmax(50px, auto) 1fr
+      [second-gutter-end];
+  }
+}
+
+// utilities :
+.heading {
+  &__primary {
+    color: white;
+    background-color: $red-color;
+    padding: 40px 0;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: bold;
+    font-size: 40px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+      "Segoe UI Symbol";
+  }
+  &__secondary {
+    justify-self: flex-start;
+    grid-column: 1/-1;
+    color: $black-color;
+    text-transform: capitalize;
+    font-size: 25px;
+    font-weight: bold;
+    border-bottom: 2px solid $black-color;
+  }
+}
+
+//components :
