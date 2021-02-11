@@ -12,6 +12,7 @@ Add a gallery page to display the images of the books.
 Add an advertising page for a national event (You choose the theme of the event, the date, the details) e.g: "National Reading Day"
 </li>
 </ul>
+
 Develop in `HTML / CSS` the two added pages respecting the model produced.
 
 Provide adequate content for the site (text, photos).
@@ -37,3 +38,7 @@ This project was about developing a website for a library that I learned to prot
 <li>sass preprocessing</li>
 
 </ul>
+
+### **final result :**
+
+<a href="https://othmanekahtal.github.io/memorial-books-web-site/"> Click here to preview</a>

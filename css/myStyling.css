@@ -318,6 +318,7 @@ figure {
     font-size: 2rem; }
     @media only screen and (max-width: 37.5em) {
       .passed-event__title h3 {
+        font-size: 1.8rem;
         padding: 1.5rem; } }
   .passed-event__desc p {
     padding: 2.5rem; }

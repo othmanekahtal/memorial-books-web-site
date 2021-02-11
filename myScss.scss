@@ -444,6 +444,7 @@ figure {
     font-weight: bold;
     font-size: 2rem;
     @include responsive("mobile-screen") {
+      font-size: 1.8rem;
       padding: 1.5rem;
     }
   }
