@@ -6,28 +6,151 @@ $black-color: #282727;
 $gold-color: #ffd21c;
 
 //media query:
-//some code here...
-
+@mixin responsive($breakpoint) {
+  @if ($breakpoint== "large-screen") {
+    @media only screen and (max-width: 97.5em) {
+      @content;
+    }
+  }
+  @if ($breakpoint== "medium-screen") {
+    @media only screen and (max-width: 79.375em) {
+      @content;
+    }
+  }
+  @if ($breakpoint== "land-tab-screen") {
+    @media only screen and (max-width: 71.875em) {
+      @content;
+    }
+  }
+  @if ($breakpoint== "tab-screen") {
+    @media only screen and (max-width: 59.5em) {
+      @content;
+    }
+  }
+  @if ($breakpoint== "small-tab-screen") {
+    @media only screen and (max-width: 50em) {
+      @content;
+    }
+  }
+  @if ($breakpoint== "mobile-screen") {
+    @media only screen and (max-width: 37.5em) {
+      @content;
+    }
+  }
+}
+// base :
+html {
+  font-size: 62.5%; // 1rem = 10px
+  @include responsive("large-screen") {
+    font-size: 50%;
+  }
+  @include responsive("medium-screen") {
+    font-size: 47.5%;
+  }
+  @include responsive("land-tab-screen") {
+    font-size: 50%;
+  }
+}
+// restyling container of bootstrap :
+.container {
+  @media (min-width: 1200px) {
+    max-width: 1240px;
+  }
+  @include responsive("large-screen") {
+    & .main-menu a {
+      font-size: 1.4rem;
+    }
+  }
+}
 //layout :
+.gallery-box,
 .event-box {
-  padding-top: 80px;
+  margin-top: 9rem;
+  @media (min-width: 768px) and (max-width: 991px) {
+    margin-top: 73px;
+  }
+  @media (min-width: 576px) and (max-width: 767px) {
+    margin-top: 66px;
+  }
+  @media (max-width: 575px) {
+    margin-top: 0;
+  }
   font-family: inherit;
+}
+.gallery-box {
   &__main {
+    margin: 5rem 0;
     display: grid;
-    grid-gap: 50px;
-
+    grid-gap: 5rem;
     grid-template-columns:
-      [first-gutter-start] 1fr minmax(50px, auto)
+      [first-gutter-start] 1fr minmax(5rem, auto)
       [first-gutter-end start-full-grid] repeat(
         4,
-        [start-column] minmax(200px, max-content) [end-column]
+        [start-column] minmax(25rem, max-content) [end-column]
       )
-      [end-full-grid second-gutter-start] minmax(50px, auto) 1fr
+      [end-full-grid second-gutter-start] minmax(5rem, auto) 1fr
       [second-gutter-end];
+    @include responsive("land-tab-screen") {
+      grid-template-columns:
+        [first-gutter-start] 1fr minmax(5rem, auto)
+        [first-gutter-end start-full-grid] repeat(
+          3,
+          [start-column] minmax(25rem, max-content) [end-column]
+        )
+        [end-full-grid second-gutter-start] minmax(5rem, auto) 1fr
+        [second-gutter-end];
+    }
+    @include responsive("tab-screen") {
+      grid-template-columns:
+        [first-gutter-start] 1fr minmax(2.5rem, auto)
+        [first-gutter-end start-full-grid] repeat(
+          2,
+          [start-column] minmax(25rem, max-content) [end-column]
+        )
+        [end-full-grid second-gutter-start] minmax(2.5rem, auto) 1fr
+        [second-gutter-end];
+      grid-gap: 3.5rem;
+    }
+    @include responsive("mobile-screen") {
+      grid-template-columns:
+        [first-gutter-start] 1fr
+        [first-gutter-end start-full-grid] minmax(25rem, max-content)
+        [end-full-grid second-gutter-start] 1fr
+        [second-gutter-end];
+    }
   }
 }
 
+.recently-book:nth-of-type(4n + 1),
+.book-popular:nth-of-type(4n + 1) {
+  grid-column: start-column 1 / end-column 1;
+  @include responsive("land-tab-screen") {
+    grid-column: initial;
+  }
+}
+
+.recently-book:nth-of-type(3n + 1),
+.book-popular:nth-of-type(3n + 1) {
+  @include responsive("land-tab-screen") {
+    grid-column: start-column 1 / end-column 1;
+  }
+  @include responsive("tab-screen") {
+    grid-column: initial;
+  }
+}
+.recently-book:nth-of-type(2n + 1),
+.book-popular:nth-of-type(2n + 1) {
+  @include responsive("tab-screen") {
+    grid-column: start-column 1 / end-column 1;
+  }
+  @include responsive("mobile-screen") {
+    grid-column: initial;
+  }
+}
 // utilities :
+figure {
+  margin: unset !important;
+}
 .heading {
   &__primary {
     color: white;
@@ -42,14 +165,321 @@ $gold-color: #ffd21c;
       "Segoe UI Symbol";
   }
   &__secondary {
+    @include responsive("mobile-screen") {
+      justify-self: flex-start;
+    }
+    display: inline-block;
     justify-self: flex-start;
-    grid-column: 1/-1;
+    grid-column: start-full-grid / second-gutter-start;
     color: $black-color;
     text-transform: capitalize;
-    font-size: 25px;
-    font-weight: bold;
+    font-size: 3.5rem;
+    font-weight: 500;
     border-bottom: 2px solid $black-color;
+  }
+}
+.show-more {
+  grid-column: start-full-grid / second-gutter-start;
+  justify-self: center;
+  display: inline-block;
+  padding: 2rem 5.5rem;
+  color: white;
+  background-color: $pink-color;
+  border-radius: 5em;
+  font-size: 1.8rem;
+  outline: none;
+  border: none;
+  transition: background 0.3s ease-in-out;
+  &:hover {
+    background-color: $black-color;
+  }
+}
+.icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  &-star {
+    fill: $gold-color;
+    &--empty {
+      fill: rgba(#000, 0.25);
+    }
+  }
+  &-heart {
+    box-sizing: content-box;
+    fill: white;
+    stroke: $black-color;
+    stroke-width: 1px;
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    transition: all 0.3s ease-in-out;
+    &:hover {
+      fill: $red-color;
+      stroke: unset;
+    }
+  }
+  &-cart {
+    width: 3rem;
+    height: 3rem;
+    margin-left: 1.5rem;
+    fill: white;
   }
 }
 
 //components :
+.book-box {
+  border-radius: 2.5rem;
+  border: 2px solid rgba(#000, 0.25);
+  background-color: rgba(#000000, 0.01);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  color: $black-color;
+  @include responsive("mobile-screen") {
+    grid-column: start-full-grid / end-full-grid !important;
+  }
+  &__img {
+    position: relative;
+
+    img {
+      width: 100%;
+      height: 45rem;
+      @include responsive("medium-screen") {
+        height: 40rem;
+      }
+    }
+  }
+  &__info {
+    place-self: center;
+    text-align: center;
+    // margin: 0 auto;
+    max-width: 85%;
+    overflow: hidden;
+  }
+  .book-price-rating {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 1.5rem 0;
+  }
+  .book-title {
+    margin-top: 1.5rem;
+    font-weight: 400;
+    font-size: 3rem;
+    color: $red-color;
+    text-transform: capitalize;
+    // for hidden other text :
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .book-author {
+    text-transform: capitalize;
+    font-weight: 300;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  &__price {
+    font-weight: bold;
+    font-size: 2rem;
+    color: $red-color;
+  }
+  &__rating {
+    display: flex;
+  }
+  &__cart {
+    justify-self: stretch;
+    color: white;
+    &:hover .book-box__btn {
+      background: linear-gradient(to left, $red-color, $pink-color);
+    }
+  }
+  &__btn {
+    text-transform: capitalize;
+    font-weight: bold;
+    font-size: 1.8rem;
+    padding: 1.5rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: currentColor;
+    background: linear-gradient(to right, $red-color, $pink-color);
+    transition: background 0.3s ease-in-out;
+  }
+}
+.special-offer {
+  color: white;
+  font-weight: bold;
+  font-size: 1.8rem;
+  background-color: $red-color;
+  display: inline-block;
+  padding: 1rem 7.5rem;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translate(-40%, -50%) rotateZ(-90deg);
+  transform-origin: center;
+  border-radius: 0 0 2.5rem 2.5rem;
+  @include responsive("medium-screen") {
+    font-size: 1.6rem;
+    padding: 1rem 5.5rem;
+  }
+}
+
+// start styling events page :
+.upcoming-event {
+  margin: 5rem 0;
+  display: grid;
+  grid-gap: 5rem;
+  justify-content: center;
+  grid-template-columns:
+    [first-gutter-start] 1fr minmax(5rem, auto)
+    [first-gutter-end start-full-grid] repeat(
+      2,
+      [start-column] minmax(45rem, 55rem) [end-column]
+    )
+    [end-full-grid second-gutter-start] minmax(5rem, auto)
+    1fr [second-gutter-end];
+  @include responsive("small-tab-screen") {
+    grid-template-columns:
+      1fr minmax(2.5rem, auto)
+      [first-gutter-end start-full-grid] minmax(45rem, 55rem)
+      [end-full-grid second-gutter-start] minmax(2.5rem, auto)
+      1fr [second-gutter-end];
+  }
+  @include responsive("mobile-screen") {
+    grid-template-columns:
+      1fr minmax(2.5rem, auto)
+      [first-gutter-end start-full-grid] minmax(30rem, 35rem)
+      [end-full-grid second-gutter-start] minmax(2.5rem, auto)
+      1fr [second-gutter-end];
+  }
+}
+.box-event {
+  display: grid;
+  grid-gap: 2.5rem;
+  grid-template-columns: minmax(15rem, 20rem) minmax(20rem, 25rem);
+
+  @include responsive("small-tab-screen") {
+    place-self: center;
+    grid-column: start-full-grid / end-full-grid !important;
+  }
+  @include responsive("mobile-screen") {
+    grid-template-columns: unset !important;
+  }
+}
+.event-image {
+  height: 100%;
+  overflow: hidden;
+  grid-row: 2 span;
+
+  &:hover img {
+    transform: scale(1.5);
+    filter: blur(2px);
+  }
+  img {
+    transition: transform 0.25s ease-in-out;
+    width: 100%;
+    height: 100%;
+  }
+}
+.event-info {
+  display: flex;
+  justify-content: space-between;
+}
+.event-date {
+  cursor: default;
+  display: inline-block;
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 500;
+  padding: 0.5rem 1.5rem;
+  background-color: $red-color;
+  transition: background 0.3s ease-in-out, font 0.3s linear;
+  &:hover {
+    background-color: $black-color;
+  }
+}
+.event-show-more {
+  padding: 0.5rem 1.5rem;
+  background-color: $red-color;
+  transition: background 0.3s ease-in-out, font 0.3s linear;
+}
+
+.box-event:first-of-type {
+  grid-column: start-column 1 / end-column 1;
+  @include responsive("screen-mobile") {
+    grid-column: unset;
+  }
+}
+.passed-event:nth-of-type(2n + 1) {
+  grid-column-start: start-full-grid;
+  @include responsive("screen-mobile") {
+    grid-column: unset;
+  }
+}
+.passed-event {
+  outline-offset: 1rem;
+  outline: 1px solid rgba($black-color, 0.1);
+
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  @include responsive("small-tab-screen") {
+    place-self: center;
+    grid-column: start-full-grid / end-full-grid !important;
+  }
+  &__image {
+    width: 100%;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  &__title h3 {
+    padding: 2.5rem;
+    color: $red-color;
+    font-weight: bold;
+    font-size: 2rem;
+    @include responsive("mobile-screen") {
+      padding: 1.5rem;
+    }
+  }
+  &__desc {
+    p {
+      padding: 2.5rem;
+      @include responsive("mobile-screen") {
+        padding: 1.5rem;
+      }
+    }
+  }
+  &__info {
+    margin-top: 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    @include responsive("mobile-screen") {
+      flex-direction: column;
+    }
+  }
+  &__date {
+    cursor: default;
+    display: inline-block;
+    color: white;
+    font-size: 1.8rem;
+    font-weight: 500;
+    padding: 0.5rem 1.5rem;
+    background-color: $red-color;
+    @include responsive("mobile-screen") {
+      padding: 0.5rem 2.5rem;
+      margin-bottom: 1.5rem;
+    }
+  }
+  &__show-more {
+    padding-right: 1.5rem;
+    font-size: 1.8rem;
+    font-weight: 500;
+  }
+}
