@@ -60,13 +60,19 @@ html {
       grid-column: initial; } }
 
 @media only screen and (max-width: 71.875em) {
-  .recently-book:nth-of-type(3n + 1),
-  .book-popular:nth-of-type(3n + 1) {
+  .recently-book:nth-of-type(3n + 1) {
     grid-column: start-column 1 / end-column 1; } }
 
 @media only screen and (max-width: 59.5em) {
-  .recently-book:nth-of-type(3n + 1),
-  .book-popular:nth-of-type(3n + 1) {
+  .recently-book:nth-of-type(3n + 1) {
+    grid-column: initial; } }
+
+@media only screen and (max-width: 71.875em) {
+  .book-popular:nth-of-type(3n) {
+    grid-column: start-column 1 / end-column 1; } }
+
+@media only screen and (max-width: 59.5em) {
+  .book-popular:nth-of-type(3n) {
     grid-column: initial; } }
 
 @media only screen and (max-width: 59.5em) {

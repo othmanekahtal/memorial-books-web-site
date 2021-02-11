@@ -129,8 +129,15 @@ html {
   }
 }
 
-.recently-book:nth-of-type(3n + 1),
-.book-popular:nth-of-type(3n + 1) {
+.recently-book:nth-of-type(3n + 1) {
+  @include responsive("land-tab-screen") {
+    grid-column: start-column 1 / end-column 1;
+  }
+  @include responsive("tab-screen") {
+    grid-column: initial;
+  }
+}
+.book-popular:nth-of-type(3n) {
   @include responsive("land-tab-screen") {
     grid-column: start-column 1 / end-column 1;
   }
